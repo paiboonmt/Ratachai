@@ -17,11 +17,12 @@
                 require_once '../includes/connection.php';
                 $sql_data = $conndb->query("SELECT m.id as mid , m.m_card , m.fname , m.image , m.package,
                 m.type_training , t.time , t.time_id , m.group , m.sponsored , m.status , m.status_code ,
-                m.exp_date , m.image , m.type_fighter , p.product_name , p.id , o.id as orderid
+                m.exp_date , m.image , m.type_fighter , p.product_name , p.id , o.id as orderid , od.product_name as odproduct_name
                 FROM tb_time AS t   
                 INNER JOIN member AS m ON t.ref_m_card = m.m_card
                 LEFT JOIN products AS p ON m.package = p.id
                 LEFT JOIN orders AS o ON m.m_card = o.ref_order_id
+                LEFT JOIN order_details AS od ON o.id = od.order_id  
                 WHERE date(t.time) = CURDATE() 
                 ORDER BY t.time DESC LIMIT 15");
                 $sql_data->execute();
@@ -38,7 +39,8 @@
                     <!-- package -->
                     <?php if($row['status_code'] == 1 ) : ?>
 
-                        <td style="color: green ;font-weight: 600;"><?= 'Ticket' ?> </td>
+                        <!-- <td style="color: green ;font-weight: 600;"><'Ticket' ?></td> -->
+                        <td style="color: green ;font-weight: 600;"><?= $row['odproduct_name'] ?> </td>
 
                     <?php elseif ( $row['status_code'] == 2 ) : ?> 
 
