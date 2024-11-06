@@ -58,12 +58,15 @@
                                                 require_once '../../includes/connection.php';
                                                 $date = $_POST['date'];
                                                 $stmt = $conndb->prepare("SELECT T.time,T.ref_m_card,M.fname,M.email,M.nationalty,M.nationalty,
-                                                M.accom,M.phone,M.package,M.status_code , P.product_name , M.type_fighter
+                                                M.accom,M.phone,M.package,M.status_code , P.product_name , M.type_fighter , od.product_name as odproduct_name
                                                 FROM `tb_time` AS T
                                                 INNER JOIN member AS M ON T.ref_m_card = M.m_card
                                                 LEFT JOIN products AS P ON M.package = P.id
+                                                LEFT JOIN orders AS o ON M.m_card = o.ref_order_id
+                                                LEFT JOIN order_details AS od ON o.id = od.order_id 
                                                 WHERE `time`
-                                                LIKE '%$date%' AND `status_code` != 1 ");
+                                                LIKE '%$date%'");
+
                                                 $stmt->execute();
                                                 $data = $stmt->fetchAll();
                                            
@@ -75,13 +78,12 @@
                                                     <td hidden> <?= $row['email'] ?> </td>
                                                     <td hidden> <?= $row['nationalty'] ?> </td>
                                                     <td hidden> <?= $row['accom'] ?> </td>
-                                                    <?php if ( $row['status_code'] == 2 ) { ?>
-                                                        <td><?= $row['package'] ?></td>
+
+                                                    <?php if ( $row['status_code'] == 1 ) { ?>
+                                                        <td><?= $row['odproduct_name'] ?></td>
                                                     <?php } elseif ( $row['status_code'] == 4 )  {?> 
                                                         <td><?= $row['product_name'] ?></td>
-                                                    <?php } elseif ( $row['status_code'] == 3 )  {?> 
-                                                        <td><?= $row['type_fighter'] ?></td>
-                                                    <?php }  ?> 
+                                                    <?php } ?> 
                                                     
                                                 </tr>
                                         <?php endforeach;  } ?>
