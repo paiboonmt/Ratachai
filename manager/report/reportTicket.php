@@ -29,8 +29,7 @@
                                         </div>
                                     </div>
                                     <div class="col-2">
-                                        <input type="submit" name="search" class="btn btn-primary form-control"
-                                            value="Search">
+                                        <input type="submit" name="search" class="btn btn-primary form-control" value="Search">
                                     </div>
                                 </div>
                             </form>
@@ -63,15 +62,38 @@
                                     <tbody>
                                         <?php if (isset($_POST['search']) ) {
                                             $date = $_POST['date'];
-                                            $sql = "SELECT O.id , O.ref_order_id , O.fname , O.comment, O.exp_date,O.sta_date,
-                                            O.pay  ,O.discount , O.vat7 , O.vat3 , O.total , O.price AS Oprice,
-                                            O.num_bill, M.AddBy , M.status_code, M.package ,O.date , M.id AS mid,
-                                            M.m_card , ORR.product_name , ORR.order_id 
-                                            FROM `member` AS M , `orders` AS O  , `order_details` AS ORR
-                                            WHERE M.m_card = O.ref_order_id
-                                            AND O.date LIKE '%$date%'
-                                            GROUP BY M.m_card
-                                            ORDER BY M.id DESC ";
+                                            $sql = "SELECT 
+                                                        O.id, 
+                                                        O.ref_order_id, 
+                                                        O.fname, 
+                                                        O.comment, 
+                                                        O.exp_date, 
+                                                        O.sta_date,
+                                                        O.pay, 
+                                                        O.discount, 
+                                                        O.vat7, 
+                                                        O.vat3, 
+                                                        O.total, 
+                                                        O.price AS Oprice,
+                                                        O.num_bill, 
+                                                        O.date, 
+                                                        M.AddBy, 
+                                                        M.status_code, 
+                                                        M.package, 
+                                                        M.id AS mid, 
+                                                        M.m_card, 
+                                                        ORR.product_name, 
+                                                        ORR.order_id
+                                                    FROM 
+                                                        `orders` O
+                                                    JOIN 
+                                                        `member` M ON M.m_card = O.ref_order_id
+                                                    LEFT JOIN 
+                                                        `order_details` ORR ON ORR.order_id = O.id
+                                                    WHERE 
+                                                        O.date >= '{$date}' AND O.date < DATE_ADD('{$date}', INTERVAL 1 DAY)
+                                                    ORDER BY 
+                                                        M.id DESC";
                                             $stmt = $conndb->query($sql);
                                             $stmt->execute();
                                             $check = $stmt->fetchAll();
