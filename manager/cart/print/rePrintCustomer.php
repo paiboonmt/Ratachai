@@ -1,6 +1,8 @@
 <hr>
 <div class="row">
     <h5>RATTACHAI MUAYTHAI GYM</h5>
+    <h5>TAX : 0835561020601 ( VAT Included )</h5>
+    <h5>ใบเสร็จรับเงิน/ใบกำกับภาษีอย่างย่อ </h5>
     <h5 class="text-center">บริษัท ทีเอ็มที ภูเก็ด จำกัด</h5>
 </div>
 <hr>
@@ -221,7 +223,6 @@
     <img src="<?= $file ?>" class="imgqrcode">
     <p style="font-size: 12px;">Thank you very much for choosing our service. <br> We hope you enjoy our classes.</p>
 </div>
-
 
 <div class="foot" style="font-size: 12px; margin-bottom: 250px;" >
     <div class="row">

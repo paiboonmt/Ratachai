@@ -1,5 +1,6 @@
 <div class="row">
     <h5>TIGER MUAY THAI (THAILAND) COMPANY LIMITED</h5>
+    <h5>TAX:</h5>
     <h5 class="text-center">บริษัท ไทเกอร์ มวยไทย ( ไทยแลนด์ ) จำกัด</h5>
     <hr>
 </div>
